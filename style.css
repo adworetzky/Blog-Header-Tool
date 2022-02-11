@@ -40,9 +40,16 @@ body {
   .maincontent {
     display: none;
   }
+  h1 {
+    text-align: center;
+  }
 }
+
 /* turn it all on abover 375px */
 @media (min-width: 500px) {
+  h1 {
+    display: none;
+  }
   .maincontent {
     display: flex;
     height: auto;
