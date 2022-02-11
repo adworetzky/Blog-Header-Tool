@@ -23,8 +23,14 @@ c.width = exportWidth;
 
 const fileInput = document.createElement("input");
 uiContainer.append(fileInput);
+fileInput.classList.add("uiElement");
 fileInput.type = "file";
 fileInput.setAttribute("id", "fileUpload");
+const fileInputLabel = document.createElement("label");
+fileInputLabel.classList.add("uiElement");
+fileInputLabel.setAttribute("for", "fileUpload");
+fileInputLabel.innerHTML = "Stock Image";
+uiContainer.prepend(fileInputLabel);
 
 // load image validation
 stockImg.addEventListener(
@@ -32,17 +38,19 @@ stockImg.addEventListener(
   function () {
     // will execute on stockImg load
     drawImg(stockImg, c);
-  },
-  false
-);
-meshImg.addEventListener(
-  "load",
-  function () {
-    // will execute on meshImg load
     drawMesh(meshImg, c);
   },
   false
 );
+// meshImg.addEventListener(
+//   "load",
+//   function () {
+//     // will execute on meshImg load
+//     drawImg(stockImg, c);
+//     drawMesh(meshImg, c);
+//   },
+//   false
+// );
 
 // Function to scale to fill image, draw img to canvas // Main draw function
 function drawImg(img, canvas) {
@@ -58,22 +66,11 @@ function drawImg(img, canvas) {
 
 function drawMesh(img, canvas) {
   let ctx = canvas.getContext("2d");
-  // get the scale
-  var scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-  // get the top left position of the image
-  var x = canvas.width / 2 - (img.width / 2) * scale;
-  var y = canvas.height / 2 - (img.height / 2) * scale;
-  ctx.globalCompositeOperation = "color";
-  ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-  ctx.globalCompositeOperation = "multiply";
-  ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-}
 
-// function to create a new element, add classname, and appened to main
-function makeNewElement(name, className, appendPlacement) {
-  const uiContainer = document.createElement(name);
-  uiContainer.classList.add(className);
-  main.append(appendPlacement);
+  ctx.globalCompositeOperation = "color";
+  ctx.drawImage(img, -5, -5, canvas.width + 10, canvas.height + 10);
+  ctx.globalCompositeOperation = "multiply";
+  ctx.drawImage(img, -5, -5, canvas.width + 10, canvas.height + 10);
 }
 
 fileInput.addEventListener("change", function () {
