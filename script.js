@@ -2,24 +2,31 @@
 var exportWidth = 1220;
 var exportHeight = 723;
 
-var stockImg = new Image(); // Create new img element
+var stockImg = new Image();
 stockImg.src = "stock img/placeholderimg.png";
-var maskImg = new Image(); // Create new img element
-maskImg.src = "mask/Mask.png";
-var meshImg = new Image(); // Create new img element
+var maskImg = new Image();
+var meshImg = new Image();
 
 // fill and array with src links to mesh files
 let imgArray = [];
 for (let index = 0; index <= 49; index++) {
   imgArray[index] = "mesh/mesh" + index + ".png";
 }
+let maskArray = [];
+for (let index = 0; index <= 13; index++) {
+  maskArray[index] = "mask/Mask" + index + ".png";
+}
 
-// set random initial mesh to display
+// set random initial mesh and mask to display
 let min = Math.ceil(0);
 let max = Math.floor(49);
 let randMesh = Math.floor(Math.random() * (max - min) + min);
 meshImg.src = imgArray[randMesh];
 
+min = Math.ceil(0);
+max = Math.floor(13);
+let randMask = Math.floor(Math.random() * (max - min) + min);
+maskImg.src = maskArray[randMask];
 // Dynamic element creation
 
 // Containers
@@ -70,6 +77,20 @@ for (var i = 0; i < imgArray.length; i++) {
   opt.innerHTML = "Mesh:" + (i + 1);
   meshSelect.appendChild(opt);
 }
+
+const randomButton = document.createElement("button");
+uiContainer.append(randomButton);
+randomButton.innerHTML = "Randomize";
+randomButton.classList.add("uiElement");
+randomButton.setAttribute("id", "randomButton");
+
+const saveButton = document.createElement("button");
+uiContainer.append(saveButton);
+saveButton.innerHTML = "Save";
+saveButton.classList.add("uiElement");
+saveButton.setAttribute("id", "saveButton");
+
+// focus on mesh selector on load
 window.onload = function () {
   document.getElementById("meshSelect").focus();
 };
@@ -80,8 +101,7 @@ stockImg.addEventListener(
   function () {
     // will execute on stockImg load
     console.log("stockImg loaded");
-    drawMesh(meshImg, c1);
-    drawImg(stockImg, c);
+    drawCanvas();
   },
   false
 );
@@ -90,8 +110,7 @@ meshImg.addEventListener(
   function () {
     // will execute on meshImg load
     console.log("meshImg loaded");
-    drawMesh(meshImg, c1);
-    drawImg(stockImg, c);
+    drawCanvas();
   },
   false
 );
@@ -100,8 +119,7 @@ maskImg.addEventListener(
   function () {
     // will execute on maskImg load
     console.log("maskImg loaded");
-    drawMesh(meshImg, c1);
-    drawImg(stockImg, c);
+    drawCanvas();
   },
   false
 );
@@ -131,32 +149,61 @@ function drawImg(img, canvas) {
   var x = canvas.width / 2 - (img.width / 2) * scale;
   var y = canvas.height / 2 - (img.height / 2) * scale;
 
-  // draw stock image
+  // Draw stock image
   ctx.globalCompositeOperation = "source-over";
   ctx.drawImage(img, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
 
-  //draw mesh (previouslymasked)
+  // Draw mesh (previously masked)
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalCompositeOperation = "multiply";
-  ctx.globalAlpha = 0.5;
+  ctx.globalAlpha = 1;
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalAlpha = 1;
   console.timeEnd("drawtime");
+}
+
+// Combined Draw function, Use to keep order of layer intact
+function drawCanvas() {
+  drawMesh(meshImg, c1);
+  drawImg(stockImg, c);
 }
 
 // redraw canvas on image upload event
 fileInput.addEventListener("change", function () {
   console.log(fileInput.files[0]);
   stockImg.src = URL.createObjectURL(fileInput.files[0]);
-  drawMesh(meshImg, c1);
-  drawImg(stockImg, c);
+  drawCanvas();
 });
 
 // redraw canvas on mesh select event
 meshSelect.addEventListener("change", function () {
   meshImg.src = meshSelect.value;
+  drawCanvas();
+});
 
-  drawMesh(meshImg, c1);
-  drawImg(stockImg, c);
+randomButton.addEventListener("click", function () {
+  // set random initial mesh and mask to display
+  let min = Math.ceil(0);
+  let max = Math.floor(49);
+  let randMesh = Math.floor(Math.random() * (max - min) + min);
+  meshImg.src = imgArray[randMesh];
+
+  min = Math.ceil(0);
+  max = Math.floor(13);
+  let randMask = Math.floor(Math.random() * (max - min) + min);
+  maskImg.src = maskArray[randMask];
+  drawCanvas();
+});
+
+saveButton.addEventListener("click", function () {
+  // set random initial mesh and mask to display
+  const link = document.createElement("a");
+  let d = new Date(),
+    h = (d.getHours() < 10 ? "0" : "") + d.getHours(),
+    m = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
+  link.download = "Blog Header Image-" + h + ":" + m + ".png";
+  link.href = canvas.toDataURL();
+  link.click();
+  link.delete;
 });

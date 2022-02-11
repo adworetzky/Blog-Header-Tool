@@ -73,4 +73,13 @@ body {
     margin-top: 20px;
     color: #f9aa33;
   }
+  #randomButton {
+    margin-top: 20px;
+    align-self: flex-start;
+  }
+
+  #saveButton {
+    margin-top: 20px;
+    align-self: flex-end;
+  }
 }
