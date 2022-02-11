@@ -31,8 +31,9 @@ body {
   height: 100%;
   width: 100%;
   align-content: center;
-  background-color: #0e1013;
-  color: #dadce0;
+  background-color: #232f34;
+
+  color: #f9aa33;
   font-family: Arial, Helvetica, sans-serif;
 }
 /* turn it all off below 375px */
@@ -53,19 +54,23 @@ body {
     margin-left: 1%;
     width: 75%;
     height: auto;
-
-    background-color: var(--dark);
   }
   .uiContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #17181b;
+    background-color: #344955;
     width: 25%;
     margin: 0 1%, 0, 0;
+    padding: 2%;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.199));
   }
   .uiElement {
     height: fit-content;
     margin: 1%;
+  }
+  .uiElementLabel {
+    margin-top: 20px;
+    color: #f9aa33;
   }
 }
