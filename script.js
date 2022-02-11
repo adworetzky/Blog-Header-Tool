@@ -138,8 +138,9 @@ function drawImg(img, canvas) {
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalCompositeOperation = "multiply";
-  ctx.globalAlpha = 0.9;
+  ctx.globalAlpha = 0.5;
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
+  ctx.globalAlpha = 1;
 }
 
 // redraw canvas on image upload event
