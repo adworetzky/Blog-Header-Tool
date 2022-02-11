@@ -78,6 +78,23 @@ for (var i = 0; i < imgArray.length; i++) {
   meshSelect.appendChild(opt);
 }
 
+const maskSelect = document.createElement("select");
+uiContainer.append(maskSelect);
+maskSelect.classList.add("uiElement");
+maskSelect.setAttribute("id", "maskSelect");
+
+const maskSelectLabel = document.createElement("label");
+maskSelectLabel.classList.add("uiElementLabel");
+maskSelectLabel.setAttribute("for", "maskSelect");
+maskSelectLabel.innerHTML = "Mask Selection";
+maskSelect.insertAdjacentElement("beforebegin", maskSelectLabel);
+for (var i = 0; i < maskArray.length; i++) {
+  var opt = document.createElement("option");
+  opt.value = maskArray[i];
+  opt.innerHTML = "Mask:" + (i + 1);
+  maskSelect.appendChild(opt);
+}
+
 const randomButton = document.createElement("button");
 uiContainer.append(randomButton);
 randomButton.innerHTML = "Randomize";
@@ -182,6 +199,12 @@ meshSelect.addEventListener("change", function () {
   meshImg.src = meshSelect.value;
   drawCanvas();
   console.log("Mesh changed");
+});
+
+maskSelect.addEventListener("change", function () {
+  maskImg.src = maskSelect.value;
+  drawCanvas();
+  console.log("Mask changed");
 });
 
 randomButton.addEventListener("click", function () {
