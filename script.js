@@ -14,10 +14,14 @@ for (let index = 0; index <= 49; index++) {
   imgArray[index] = "mesh/mesh" + index + ".png";
 }
 
-// set initial mesh to display
-meshImg.src = imgArray[7];
+// set random initial mesh to display
+let min = Math.ceil(0);
+let max = Math.floor(49);
+let randMesh = Math.floor(Math.random() * (max - min) + min);
+meshImg.src = imgArray[randMesh];
 
-// -------------------------Dynamic element creation
+// Dynamic element creation
+
 // Containers
 const main = document.querySelector("main");
 main.classList.add("maincontent");
@@ -134,7 +138,7 @@ function drawImg(img, canvas) {
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalCompositeOperation = "multiply";
-  ctx.globalAlpha = 0.8;
+  ctx.globalAlpha = 0.9;
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
 }
 
