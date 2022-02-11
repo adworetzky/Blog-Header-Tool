@@ -32,7 +32,6 @@ body {
   width: 100%;
   align-content: center;
   background-color: #232f34;
-
   color: #f9aa33;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -54,6 +53,7 @@ body {
     margin-left: 1%;
     width: 75%;
     height: auto;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.199));
   }
   .uiContainer {
     display: flex;
@@ -63,7 +63,7 @@ body {
     width: 25%;
     margin: 0 1%, 0, 0;
     padding: 2%;
-    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.199));
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.199));
   }
   .uiElement {
     height: fit-content;

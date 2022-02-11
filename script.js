@@ -108,6 +108,7 @@ maskImg.addEventListener(
 
 // function to handle drawing mesh to c1 canvas
 function drawMesh(img, canvas) {
+  console.time("drawtime");
   let ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -141,6 +142,7 @@ function drawImg(img, canvas) {
   ctx.globalAlpha = 0.5;
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalAlpha = 1;
+  console.timeEnd("drawtime");
 }
 
 // redraw canvas on image upload event
