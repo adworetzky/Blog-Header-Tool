@@ -17,7 +17,7 @@ for (let index = 0; index <= 49; index++) {
 // set initial mesh to display
 meshImg.src = imgArray[7];
 
-// Dynamic element creation
+// -------------------------Dynamic element creation
 // Containers
 const main = document.querySelector("main");
 main.classList.add("maincontent");
@@ -70,7 +70,7 @@ window.onload = function () {
   document.getElementById("meshSelect").focus();
 };
 
-// load image validation
+//load image validation
 stockImg.addEventListener(
   "load",
   function () {
@@ -94,7 +94,7 @@ meshImg.addEventListener(
 maskImg.addEventListener(
   "load",
   function () {
-    // will execute on meshImg load
+    // will execute on maskImg load
     console.log("maskImg loaded");
     drawMesh(meshImg, c1);
     drawImg(stockImg, c);
@@ -104,8 +104,6 @@ maskImg.addEventListener(
 
 // function to handle drawing mesh to c1 canvas
 function drawMesh(img, canvas) {
-  console.log("draw function trigger");
-
   let ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
