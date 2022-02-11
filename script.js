@@ -7,11 +7,12 @@ stockImg.src = "stock img/placeholderimg.png";
 var maskImg = new Image();
 var meshImg = new Image();
 
-// fill and array with src links to mesh files
-let imgArray = [];
+// fill an array with src links to mesh files
+let meshArray = [];
 for (let index = 0; index <= 49; index++) {
-  imgArray[index] = "mesh/mesh" + index + ".png";
+  meshArray[index] = "mesh/mesh" + index + ".png";
 }
+
 let maskArray = [];
 for (let index = 0; index <= 13; index++) {
   maskArray[index] = "mask/Mask" + index + ".png";
@@ -21,7 +22,6 @@ for (let index = 0; index <= 13; index++) {
 let min = Math.floor(0);
 let max = Math.floor(49);
 let randMesh = Math.floor(Math.random() * (max - min) + min);
-meshImg.src = imgArray[randMesh];
 
 min = Math.floor(0);
 max = Math.floor(13);
@@ -62,6 +62,26 @@ fileInputLabel.setAttribute("for", "fileUpload");
 fileInputLabel.innerHTML = "Stock Image";
 fileInput.insertAdjacentElement("beforebegin", fileInputLabel);
 
+const meshTempSelect = document.createElement("select");
+uiContainer.append(meshTempSelect);
+meshTempSelect.classList.add("uiElement");
+meshTempSelect.setAttribute("id", "meshTempSelect");
+var optCool = document.createElement("option");
+optCool.value = "cool ";
+optCool.innerHTML = "Cool";
+meshTempSelect.appendChild(optCool);
+var optWarm = document.createElement("option");
+optWarm.value = "warm ";
+optWarm.innerHTML = "Warm";
+meshTempSelect.appendChild(optWarm);
+meshTempSelect.value = "cool ";
+
+const meshTempSelectLabel = document.createElement("label");
+meshTempSelectLabel.classList.add("uiElementLabel");
+meshTempSelectLabel.setAttribute("for", "meshSelect");
+meshTempSelectLabel.innerHTML = "Mesh Temperature";
+meshTempSelect.insertAdjacentElement("beforebegin", meshTempSelectLabel);
+
 const meshSelect = document.createElement("select");
 uiContainer.append(meshSelect);
 meshSelect.classList.add("uiElement");
@@ -72,13 +92,12 @@ meshSelectLabel.classList.add("uiElementLabel");
 meshSelectLabel.setAttribute("for", "meshSelect");
 meshSelectLabel.innerHTML = "Mesh Selection";
 meshSelect.insertAdjacentElement("beforebegin", meshSelectLabel);
-for (var i = 0; i < imgArray.length; i++) {
+for (var i = 0; i < meshArray.length; i++) {
   var opt = document.createElement("option");
-  opt.value = imgArray[i];
+  opt.value = meshArray[i];
   opt.innerHTML = "Mesh:" + (i + 1);
   meshSelect.appendChild(opt);
 }
-meshSelect.value = imgArray[randMesh];
 
 const maskSelect = document.createElement("select");
 uiContainer.append(maskSelect);
@@ -147,6 +166,7 @@ maskImg.addEventListener(
 // function to handle drawing mesh to c1 canvas
 function drawMesh(img, canvas) {
   console.time("drawtime");
+
   let ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -182,9 +202,11 @@ function drawImg(img, canvas) {
   ctx.globalAlpha = 1;
   console.timeEnd("drawtime");
 }
+combineTempandMeshpath();
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
+  console.log(meshImg.src);
   drawMesh(meshImg, c1);
   drawImg(stockImg, c);
 }
@@ -199,12 +221,13 @@ fileInput.addEventListener("change", function () {
 
 // redraw canvas on mesh select event
 meshSelect.addEventListener("change", function () {
-  meshImg.src = meshSelect.value;
+  combineTempandMeshpath();
   drawCanvas();
   console.log("Mesh changed");
 });
 
 maskSelect.addEventListener("change", function () {
+  combineTempandMeshpath();
   maskImg.src = maskSelect.value;
   drawCanvas();
   console.log("Mask changed");
@@ -212,11 +235,20 @@ maskSelect.addEventListener("change", function () {
 
 randomButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
+
+  let randMeshTemp = Math.round(Math.random());
+
+  if (randMeshTemp == 0) {
+    meshTempSelect.value = "cool ";
+  } else {
+    meshTempSelect.value = "warm ";
+  }
+
   let min = Math.floor(0);
   let max = Math.floor(49);
   let randMesh = Math.floor(Math.random() * (max - min) + min);
-  meshImg.src = imgArray[randMesh];
-  meshSelect.value = imgArray[randMesh];
+  meshImg.src = meshTempSelect.value + meshArray[randMesh];
+  meshSelect.value = meshArray[randMesh];
   min = Math.floor(0);
   max = Math.floor(13);
   let randMask = Math.floor(Math.random() * (max - min) + min);
@@ -238,4 +270,13 @@ saveButton.addEventListener("click", function () {
   link.click();
   link.delete;
   console.log("Image Saved! You're welcome, Eric");
+});
+
+function combineTempandMeshpath() {
+  meshImg.src = meshTempSelect.value + meshSelect.value;
+}
+
+meshTempSelect.addEventListener("change", function () {
+  combineTempandMeshpath();
+  drawCanvas();
 });
