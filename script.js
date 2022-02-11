@@ -18,15 +18,16 @@ for (let index = 0; index <= 13; index++) {
 }
 
 // set random initial mesh and mask to display
-let min = Math.ceil(0);
+let min = Math.floor(0);
 let max = Math.floor(49);
 let randMesh = Math.floor(Math.random() * (max - min) + min);
 meshImg.src = imgArray[randMesh];
 
-min = Math.ceil(0);
+min = Math.floor(0);
 max = Math.floor(13);
 let randMask = Math.floor(Math.random() * (max - min) + min);
 maskImg.src = maskArray[randMask];
+
 // Dynamic element creation
 
 // Containers
@@ -77,6 +78,7 @@ for (var i = 0; i < imgArray.length; i++) {
   opt.innerHTML = "Mesh:" + (i + 1);
   meshSelect.appendChild(opt);
 }
+meshSelect.value = imgArray[randMesh];
 
 const maskSelect = document.createElement("select");
 uiContainer.append(maskSelect);
@@ -94,6 +96,7 @@ for (var i = 0; i < maskArray.length; i++) {
   opt.innerHTML = "Mask:" + (i + 1);
   maskSelect.appendChild(opt);
 }
+maskSelect.value = maskArray[randMask];
 
 const randomButton = document.createElement("button");
 uiContainer.append(randomButton);
@@ -209,15 +212,16 @@ maskSelect.addEventListener("change", function () {
 
 randomButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
-  let min = Math.ceil(0);
+  let min = Math.floor(0);
   let max = Math.floor(49);
   let randMesh = Math.floor(Math.random() * (max - min) + min);
   meshImg.src = imgArray[randMesh];
-
-  min = Math.ceil(0);
+  meshSelect.value = imgArray[randMesh];
+  min = Math.floor(0);
   max = Math.floor(13);
   let randMask = Math.floor(Math.random() * (max - min) + min);
   maskImg.src = maskArray[randMask];
+  maskSelect.value = maskArray[randMask];
   drawCanvas();
   console.log("Random mask and mesh selected!");
 });
