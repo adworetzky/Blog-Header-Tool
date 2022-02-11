@@ -174,12 +174,14 @@ fileInput.addEventListener("change", function () {
   console.log(fileInput.files[0]);
   stockImg.src = URL.createObjectURL(fileInput.files[0]);
   drawCanvas();
+  console.log("File Uploaded");
 });
 
 // redraw canvas on mesh select event
 meshSelect.addEventListener("change", function () {
   meshImg.src = meshSelect.value;
   drawCanvas();
+  console.log("Mesh changed");
 });
 
 randomButton.addEventListener("click", function () {
@@ -194,6 +196,7 @@ randomButton.addEventListener("click", function () {
   let randMask = Math.floor(Math.random() * (max - min) + min);
   maskImg.src = maskArray[randMask];
   drawCanvas();
+  console.log("Random mask and mesh selected!");
 });
 
 saveButton.addEventListener("click", function () {
@@ -201,9 +204,11 @@ saveButton.addEventListener("click", function () {
   const link = document.createElement("a");
   let d = new Date(),
     h = (d.getHours() < 10 ? "0" : "") + d.getHours(),
-    m = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
-  link.download = "Blog Header Image-" + h + ":" + m + ".png";
+    m = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes(),
+    s = (d.getSeconds() < 10 ? "0" : "") + d.getSeconds();
+  link.download = "Blog Header Image-" + h + ":" + m + ":" + s + ".png";
   link.href = canvas.toDataURL();
   link.click();
   link.delete;
+  console.log("Image Saved! You're welcome, Eric");
 });
