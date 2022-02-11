@@ -194,10 +194,15 @@ function drawImg(img, canvas) {
   ctx.drawImage(img, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
 
   // Draw mesh (previously masked)
+  if (meshTempSelect.value == "warm ") {
+    ctx.globalAlpha = 0.65;
+  } else {
+    ctx.globalAlpha = 1;
+  }
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalCompositeOperation = "multiply";
-  ctx.globalAlpha = 1;
+
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalAlpha = 1;
   console.timeEnd("drawtime");
@@ -265,7 +270,7 @@ saveButton.addEventListener("click", function () {
     h = (d.getHours() < 10 ? "0" : "") + d.getHours(),
     m = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes(),
     s = (d.getSeconds() < 10 ? "0" : "") + d.getSeconds();
-  link.download = "Blog Header Image-" + h + ":" + m + ":" + s + ".png";
+  link.download = "Blog Header Image-" + h + "." + m + "." + s + ".png";
   link.href = canvas.toDataURL();
   link.click();
   link.delete;
