@@ -1,13 +1,13 @@
 // Canvas size variables
-var exportWidth = 1220;
-var exportHeight = 723;
+var exportWidth = 1200;
+var exportHeight = 672;
 
 var stockImg = new Image();
 stockImg.src = "stock img/placeholderimg.png";
 var maskImg = new Image();
 var meshImg = new Image();
 
-// fill an array with src links to mesh files
+// fill an array with src links to mesh and mask files
 let meshArray = [];
 for (let index = 0; index <= 49; index++) {
   meshArray[index] = "mesh/mesh" + index + ".png";
@@ -133,7 +133,7 @@ saveButton.setAttribute("id", "saveButton");
 window.onload = function () {
   document.getElementById("meshSelect").focus();
 };
-
+combineTempandMeshpath();
 //load image validation
 stockImg.addEventListener(
   "load",
@@ -165,8 +165,6 @@ maskImg.addEventListener(
 
 // function to handle drawing mesh to c1 canvas
 function drawMesh(img, canvas) {
-  console.time("drawtime");
-
   let ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -205,9 +203,7 @@ function drawImg(img, canvas) {
 
   ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
   ctx.globalAlpha = 1;
-  console.timeEnd("drawtime");
 }
-combineTempandMeshpath();
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
