@@ -1,12 +1,12 @@
 // Canvas size variables
 var exportWidth = 1200;
 var exportHeight = 672;
+let counter = 1;
 
 var stockImg = new Image();
 stockImg.src = "stock img/placeholderimg.png";
 var maskImg = new Image();
 var meshImg = new Image();
-let counter = 0;
 
 // fill an array with src links to mesh and mask files
 let meshArray = [];
@@ -214,12 +214,37 @@ function drawImg(img, canvas) {
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
-  drawMesh(meshImg, c1);
-  drawImg(stockImg, c);
-
-  console.log("canvas drawn:" + counter);
-  counter++;
+  console.log(meshImg.src);
+  if (stockImg.complete && meshImg.complete && maskImg.complete) {
+    drawMesh(meshImg, c1);
+    drawImg(stockImg, c);
+    console.log("Draw Function Counter: " + counter);
+    counter++;
+  } else {
+  }
 }
+
+// redraw canvas on image upload event
+fileInput.addEventListener("change", function () {
+  console.log(fileInput.files[0]);
+  stockImg.src = URL.createObjectURL(fileInput.files[0]);
+  drawCanvas();
+  console.log("File Uploaded");
+});
+
+// redraw canvas on mesh select event
+meshSelect.addEventListener("change", function () {
+  combineTempandMeshpath();
+  drawCanvas();
+  console.log("Mesh changed");
+});
+
+maskSelect.addEventListener("change", function () {
+  combineTempandMeshpath();
+  maskImg.src = maskSelect.value;
+  drawCanvas();
+  console.log("Mask changed");
+});
 
 randomButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
@@ -246,6 +271,11 @@ randomButton.addEventListener("click", function () {
   console.log("Random mask and mesh selected!");
 });
 
+reloadButton.addEventListener("click", function () {
+  drawCanvas();
+  console.log("Canvas Reloaded");
+});
+
 saveButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
   const link = document.createElement("a");
@@ -258,11 +288,6 @@ saveButton.addEventListener("click", function () {
   link.click();
   link.delete;
   console.log("Image Saved! You're welcome, Eric");
-});
-
-reloadButton.addEventListener("click", function () {
-  drawCanvas();
-  console.log("Canvas Reloaded");
 });
 
 function combineTempandMeshpath() {
