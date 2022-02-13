@@ -80,7 +80,8 @@ body {
     margin-top: 20px;
     color: #f9aa33;
   }
-  #randomButton {
+  #randomButton,
+  #reloadButton {
     margin-top: 20px;
     align-self: flex-start;
   }
