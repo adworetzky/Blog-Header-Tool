@@ -214,13 +214,20 @@ function drawImg(img, canvas) {
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
-  console.log(meshImg.src);
   if (stockImg.complete && meshImg.complete && maskImg.complete) {
     drawMesh(meshImg, c1);
     drawImg(stockImg, c);
     console.log("Draw Function Counter: " + counter);
     counter++;
   } else {
+    console.error(
+      "Load Status: Stock Image: " +
+        stockImg.complete +
+        " , Mesh Image: " +
+        meshImg.complete +
+        " , Mask Image: " +
+        meshImg.complete
+    );
   }
 }
 
