@@ -141,12 +141,13 @@ window.onload = function () {
   document.getElementById("meshSelect").focus();
 };
 combineTempandMeshpath();
+
 //load image validation
 stockImg.addEventListener(
   "load",
   function () {
     // will execute on stockImg load
-    console.log("stockImg loaded");
+    console.log("stockImg loaded = " + stockImg.complete);
     drawCanvas();
   },
   false
@@ -155,7 +156,7 @@ meshImg.addEventListener(
   "load",
   function () {
     // will execute on meshImg load
-    console.log("meshImg loaded");
+    console.log("meshImg loaded = " + meshImg.complete);
     drawCanvas();
   },
   false
@@ -164,7 +165,7 @@ maskImg.addEventListener(
   "load",
   function () {
     // will execute on maskImg load
-    console.log("maskImg loaded");
+    console.log("maskImg loaded = " + maskImg.complete);
     drawCanvas();
   },
   false
@@ -217,11 +218,12 @@ function drawCanvas() {
   if (stockImg.complete && meshImg.complete && maskImg.complete) {
     drawMesh(meshImg, c1);
     drawImg(stockImg, c);
+    console.log("Drawn Succesfully!");
     console.log("Draw Function Counter: " + counter);
     counter++;
   } else {
-    console.error(
-      "Load Status: Stock Image: " +
+    console.warn(
+      "Not Drawn! Load Status: Stock Image: " +
         stockImg.complete +
         " , Mesh Image: " +
         meshImg.complete +
