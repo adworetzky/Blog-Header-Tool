@@ -140,36 +140,10 @@ saveButton.setAttribute("id", "saveButton");
 window.onload = function () {
   document.getElementById("meshSelect").focus();
 };
-combineTempandMeshpath();
 
-//load image validation
-stockImg.addEventListener(
-  "load",
-  function () {
-    // will execute on stockImg load
-    console.log("stockImg loaded = " + stockImg.complete);
-    drawCanvas();
-  },
-  false
-);
-meshImg.addEventListener(
-  "load",
-  function () {
-    // will execute on meshImg load
-    console.log("meshImg loaded = " + meshImg.complete);
-    drawCanvas();
-  },
-  false
-);
-maskImg.addEventListener(
-  "load",
-  function () {
-    // will execute on maskImg load
-    console.log("maskImg loaded = " + maskImg.complete);
-    drawCanvas();
-  },
-  false
-);
+// Initial Drawn Canvas
+combineTempandMeshpath();
+drawCanvas();
 
 // function to handle drawing mesh to c1 canvas
 function drawMesh(img, canvas) {
@@ -215,22 +189,13 @@ function drawImg(img, canvas) {
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
-  if (stockImg.complete && meshImg.complete && maskImg.complete) {
+  let allImages = [stockImg, meshImg, maskImg];
+  $(allImages).imagesLoaded(function () {
     drawMesh(meshImg, c1);
     drawImg(stockImg, c);
-    console.log("Drawn Succesfully!");
-    console.log("Draw Function Counter: " + counter);
+    console.log("Canvas Drawn Counter: " + counter);
     counter++;
-  } else {
-    console.warn(
-      "Not Drawn! Load Status: Stock Image: " +
-        stockImg.complete +
-        " , Mesh Image: " +
-        meshImg.complete +
-        " , Mask Image: " +
-        meshImg.complete
-    );
-  }
+  });
 }
 
 // redraw canvas on image upload event
@@ -307,3 +272,33 @@ meshTempSelect.addEventListener("change", function () {
   combineTempandMeshpath();
   drawCanvas();
 });
+
+document.onkeydown = function (e) {
+  switch (e.keyCode) {
+    case 37:
+      if (meshSelect.selectedIndex > 0) {
+        meshSelect.selectedIndex--;
+        combineTempandMeshpath();
+      } else {
+        meshSelect.selectedIndex = 49;
+      }
+      break;
+    case 38:
+      maskSelect.selectedIndex++;
+      maskImg.src = maskSelect.value;
+      break;
+    case 39:
+      meshSelect.selectedIndex++;
+      combineTempandMeshpath();
+      break;
+    case 40:
+      if (maskSelect.selectedIndex > 0) {
+        maskSelect.selectedIndex--;
+      } else {
+        maskSelect.selectedIndex = 13;
+      }
+      maskImg.src = maskSelect.value;
+      break;
+  }
+  drawCanvas();
+};
