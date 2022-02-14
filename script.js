@@ -271,7 +271,7 @@ maskSelect.addEventListener("change", function () {
   console.log("Mask changed");
 });
 
-vertSlider.addEventListener("change", function () {
+vertSlider.addEventListener("input", function () {
   drawCanvas();
   console.log("Position Updated");
 });
