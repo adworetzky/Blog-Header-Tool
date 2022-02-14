@@ -15,7 +15,7 @@ for (let index = 0; index <= 49; index++) {
 }
 
 let maskArray = [];
-for (let index = 0; index <= 15; index++) {
+for (let index = 0; index <= 19; index++) {
   maskArray[index] = "mask/Mask" + index + ".png";
 }
 
@@ -25,7 +25,7 @@ let max = Math.floor(49);
 let randMesh = Math.floor(Math.random() * (max - min) + min);
 
 min = Math.floor(0);
-max = Math.floor(15);
+max = Math.floor(19);
 let randMask = Math.floor(Math.random() * (max - min) + min);
 maskImg.src = maskArray[randMask];
 
@@ -86,20 +86,26 @@ const meshTempSelect = document.createElement("select");
 uiContainer.append(meshTempSelect);
 meshTempSelect.classList.add("uiElement");
 meshTempSelect.setAttribute("id", "meshTempSelect");
-var optCool = document.createElement("option");
-optCool.value = "cool ";
-optCool.innerHTML = "Cool";
-meshTempSelect.appendChild(optCool);
-var optWarm = document.createElement("option");
-optWarm.value = "warm ";
-optWarm.innerHTML = "Warm";
-meshTempSelect.appendChild(optWarm);
+var optBlue = document.createElement("option");
+optBlue.value = "blue ";
+optBlue.innerHTML = "Blue";
+meshTempSelect.appendChild(optBlue);
+var optRed = document.createElement("option");
+optRed.value = "red ";
+optRed.innerHTML = "Red";
+meshTempSelect.appendChild(optRed);
+var optPink = document.createElement("option");
+optPink.value = "pink ";
+optPink.innerHTML = "Pink";
+meshTempSelect.appendChild(optPink);
 
 let randMeshTemp = Math.round(Math.random());
-if (randMeshTemp == 0) {
-  meshTempSelect.value = "cool ";
-} else {
-  meshTempSelect.value = "warm ";
+if (randMeshTemp <= 0.33) {
+  meshTempSelect.value = "blue ";
+} else if (randMeshTemp > 0.33 && randMeshTemp < 0.66) {
+  meshTempSelect.value = "red ";
+} else if (randMeshTemp >= 0.66) {
+  meshTempSelect.value = "pink ";
 }
 
 const meshTempSelectLabel = document.createElement("label");
@@ -220,7 +226,7 @@ function drawImg(img, canvas) {
   );
 
   // Draw mesh (previously masked)
-  if (meshTempSelect.value == "warm ") {
+  if (meshTempSelect.value == "red ") {
     ctx.globalAlpha = 0.65;
   } else {
     ctx.globalAlpha = 0.9;
@@ -228,8 +234,11 @@ function drawImg(img, canvas) {
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
   ctx.globalCompositeOperation = "multiply";
-
   ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
+  if (meshTempSelect.value == "pink ") {
+    ctx.globalCompositeOperation = "multiply";
+    ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
+  }
   ctx.globalAlpha = 1;
 }
 
@@ -280,11 +289,12 @@ randomButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
 
   let randMeshTemp = Math.round(Math.random());
-
-  if (randMeshTemp == 0) {
-    meshTempSelect.value = "cool ";
-  } else {
-    meshTempSelect.value = "warm ";
+  if (randMeshTemp <= 0.33) {
+    meshTempSelect.value = "blue ";
+  } else if (randMeshTemp > 0.33 && randMeshTemp < 0.66) {
+    meshTempSelect.value = "red ";
+  } else if (randMeshTemp >= 0.66) {
+    meshTempSelect.value = "pink ";
   }
 
   let min = Math.floor(0);
