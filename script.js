@@ -63,6 +63,10 @@ fileInputLabel.setAttribute("for", "fileUpload");
 fileInputLabel.innerHTML = "Stock Image";
 fileInput.insertAdjacentElement("beforebegin", fileInputLabel);
 
+// // The dropzone method is added to jQuery elements and can
+// // be invoked with an (optional) configuration object.
+// $("main").dropzone({ url: "/file/post" });
+
 const vertSlider = document.createElement("input");
 uiContainer.append(vertSlider);
 vertSlider.classList.add("uiElement");
@@ -90,7 +94,13 @@ var optWarm = document.createElement("option");
 optWarm.value = "warm ";
 optWarm.innerHTML = "Warm";
 meshTempSelect.appendChild(optWarm);
-meshTempSelect.value = "cool ";
+
+let randMeshTemp = Math.round(Math.random());
+if (randMeshTemp == 0) {
+  meshTempSelect.value = "cool ";
+} else {
+  meshTempSelect.value = "warm ";
+}
 
 const meshTempSelectLabel = document.createElement("label");
 meshTempSelectLabel.classList.add("uiElementLabel");
@@ -102,7 +112,7 @@ const meshSelect = document.createElement("select");
 uiContainer.append(meshSelect);
 meshSelect.classList.add("uiElement");
 meshSelect.setAttribute("id", "meshSelect");
-
+meshSelect.value = meshArray[randMesh];
 const meshSelectLabel = document.createElement("label");
 meshSelectLabel.classList.add("uiElementLabel");
 meshSelectLabel.setAttribute("for", "meshSelect");
@@ -151,6 +161,13 @@ saveButton.innerHTML = "Save";
 saveButton.classList.add("uiElement");
 saveButton.setAttribute("id", "saveButton");
 
+const directions = document.createElement("p");
+uiContainer.append(directions);
+directions.innerHTML =
+  "Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection";
+directions.classList.add("uiElement");
+directions.setAttribute("id", "directions");
+
 // focus on mesh selector on load
 window.onload = function () {
   document.getElementById("meshSelect").focus();
@@ -187,6 +204,11 @@ function drawImg(img, canvas) {
   let offset = (img.height * scale - canvas.height) / 2;
   vertSlider.min = -offset;
   vertSlider.max = offset;
+  if (offset > 0) {
+    console.log(offset);
+  } else {
+    console.log("This image needs no nudge so offset is 0");
+  }
   // Draw stock image
   ctx.globalCompositeOperation = "source-over";
   ctx.drawImage(
@@ -213,6 +235,10 @@ function drawImg(img, canvas) {
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
+  let ctx0 = c.getContext("2d");
+  ctx0.clearRect(0, 0, c.width, c.height);
+  let ctx1 = c1.getContext("2d");
+  ctx1.clearRect(0, 0, c1.width, c1.height);
   let allImages = [stockImg, meshImg, maskImg];
   $(allImages).imagesLoaded(function () {
     drawMesh(meshImg, c1);
@@ -271,7 +297,7 @@ randomButton.addEventListener("click", function () {
   let randMask = Math.floor(Math.random() * (max - min) + min);
   maskImg.src = maskArray[randMask];
   maskSelect.value = maskArray[randMask];
-  console.log("Random mask and mesh selected!");
+  console.log("Random mask and mesh selected");
   drawCanvas();
   console.log("Random mask and mesh drawn");
 });
