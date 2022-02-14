@@ -15,7 +15,7 @@ for (let index = 0; index <= 49; index++) {
 }
 
 let maskArray = [];
-for (let index = 0; index <= 13; index++) {
+for (let index = 0; index <= 15; index++) {
   maskArray[index] = "mask/Mask" + index + ".png";
 }
 
@@ -25,7 +25,7 @@ let max = Math.floor(49);
 let randMesh = Math.floor(Math.random() * (max - min) + min);
 
 min = Math.floor(0);
-max = Math.floor(13);
+max = Math.floor(15);
 let randMask = Math.floor(Math.random() * (max - min) + min);
 maskImg.src = maskArray[randMask];
 
@@ -156,7 +156,7 @@ function drawMesh(img, canvas) {
 
   // draw mesh inside mask
   ctx.globalCompositeOperation = "source-in";
-  ctx.drawImage(img, -5, -5, canvas.width + 10, canvas.height + 10);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 }
 
 // function to take c1 canvas and draw it overtop of c canvas
@@ -177,13 +177,13 @@ function drawImg(img, canvas) {
   if (meshTempSelect.value == "warm ") {
     ctx.globalAlpha = 0.65;
   } else {
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = 0.9;
   }
   ctx.globalCompositeOperation = "color";
-  ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
+  ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
   ctx.globalCompositeOperation = "multiply";
 
-  ctx.drawImage(c1, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
+  ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
   ctx.globalAlpha = 1;
 }
 
@@ -237,12 +237,13 @@ randomButton.addEventListener("click", function () {
   meshImg.src = meshTempSelect.value + meshArray[randMesh];
   meshSelect.value = meshArray[randMesh];
   min = Math.floor(0);
-  max = Math.floor(13);
+  max = Math.floor(15);
   let randMask = Math.floor(Math.random() * (max - min) + min);
   maskImg.src = maskArray[randMask];
   maskSelect.value = maskArray[randMask];
-  drawCanvas();
   console.log("Random mask and mesh selected!");
+  drawCanvas();
+  console.log("Random mask and mesh drawn");
 });
 
 reloadButton.addEventListener("click", function () {

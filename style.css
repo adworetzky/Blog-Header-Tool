@@ -58,7 +58,8 @@ body {
     width: 95%;
     align-self: center;
   }
-  canvas {
+  canvas,
+  #canvas1 {
     margin-left: 1%;
     width: 75%;
     height: auto;
