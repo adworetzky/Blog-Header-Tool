@@ -358,9 +358,13 @@ document.onkeydown = function (e) {
       meshSelect.selectedIndex++;
       combineTempandMeshpath();
       break;
-    case 39:
-      meshSelect.selectedIndex++;
-      combineTempandMeshpath();
+    case 40:
+      if (maskSelect.selectedIndex > 0) {
+        maskSelect.selectedIndex--;
+      } else {
+        maskSelect.selectedIndex = 19;
+      }
+      maskImg.src = maskSelect.value;
       break;
     case 49:
       meshTempSelect.value = "blue ";
