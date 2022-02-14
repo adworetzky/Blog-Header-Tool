@@ -170,7 +170,7 @@ saveButton.setAttribute("id", "saveButton");
 const directions = document.createElement("p");
 uiContainer.append(directions);
 directions.innerHTML =
-  "Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection";
+  "Hotkeys:<br>Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection<br> 1 = Blue, 2 = Red, 3= Pink";
 directions.classList.add("uiElement");
 directions.setAttribute("id", "directions");
 
@@ -358,13 +358,21 @@ document.onkeydown = function (e) {
       meshSelect.selectedIndex++;
       combineTempandMeshpath();
       break;
-    case 40:
-      if (maskSelect.selectedIndex > 0) {
-        maskSelect.selectedIndex--;
-      } else {
-        maskSelect.selectedIndex = 13;
-      }
-      maskImg.src = maskSelect.value;
+    case 39:
+      meshSelect.selectedIndex++;
+      combineTempandMeshpath();
+      break;
+    case 49:
+      meshTempSelect.value = "blue ";
+      combineTempandMeshpath();
+      break;
+    case 50:
+      meshTempSelect.value = "red ";
+      combineTempandMeshpath();
+      break;
+    case 51:
+      meshTempSelect.value = "pink ";
+      combineTempandMeshpath();
       break;
   }
   drawCanvas();
