@@ -63,6 +63,21 @@ fileInputLabel.setAttribute("for", "fileUpload");
 fileInputLabel.innerHTML = "Stock Image";
 fileInput.insertAdjacentElement("beforebegin", fileInputLabel);
 
+const vertSlider = document.createElement("input");
+uiContainer.append(vertSlider);
+vertSlider.classList.add("uiElement");
+vertSlider.type = "range";
+vertSlider.min = -50;
+vertSlider.max = 50;
+vertSlider.value = 0;
+vertSlider.setAttribute("id", "vertSlider");
+
+const vertSliderLabel = document.createElement("label");
+vertSliderLabel.classList.add("uiElementLabel");
+vertSliderLabel.setAttribute("for", "vertSlider");
+vertSliderLabel.innerHTML = "Image Position";
+vertSlider.insertAdjacentElement("beforebegin", vertSliderLabel);
+
 const meshTempSelect = document.createElement("select");
 uiContainer.append(meshTempSelect);
 meshTempSelect.classList.add("uiElement");
@@ -162,16 +177,25 @@ function drawMesh(img, canvas) {
 // function to take c1 canvas and draw it overtop of c canvas
 function drawImg(img, canvas) {
   let ctx = canvas.getContext("2d");
-
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   // get the scale
   var scale = Math.max(canvas.width / img.width, canvas.height / img.height);
   // get the top left position of the image
   var x = canvas.width / 2 - (img.width / 2) * scale;
   var y = canvas.height / 2 - (img.height / 2) * scale;
 
+  let offset = (img.height * scale - canvas.height) / 2;
+  vertSlider.min = -offset;
+  vertSlider.max = offset;
   // Draw stock image
   ctx.globalCompositeOperation = "source-over";
-  ctx.drawImage(img, x, y, (img.width + 1) * scale, (img.height + 1) * scale);
+  ctx.drawImage(
+    img,
+    x,
+    y + parseInt(vertSlider.value),
+    (img.width + 1) * scale,
+    (img.height + 1) * scale
+  );
 
   // Draw mesh (previously masked)
   if (meshTempSelect.value == "warm ") {
@@ -202,6 +226,7 @@ function drawCanvas() {
 fileInput.addEventListener("change", function () {
   console.log(fileInput.files[0]);
   stockImg.src = URL.createObjectURL(fileInput.files[0]);
+  vertSlider.value = 0;
   drawCanvas();
   console.log("File Uploaded");
 });
@@ -218,6 +243,11 @@ maskSelect.addEventListener("change", function () {
   maskImg.src = maskSelect.value;
   drawCanvas();
   console.log("Mask changed");
+});
+
+vertSlider.addEventListener("change", function () {
+  drawCanvas();
+  console.log("Position Updated");
 });
 
 randomButton.addEventListener("click", function () {
