@@ -223,11 +223,13 @@ function drawImg(img, canvas) {
 
   // Draw mesh (previously masked)
   if (meshColorSelect.value == "red ") {
-    ctx.globalAlpha = 0.75;
+    ctx.globalAlpha = 0.65;
   } else if (meshColorSelect.value == "pink ") {
     ctx.globalAlpha = 1;
   } else if (meshColorSelect.value == "blue ") {
     ctx.globalAlpha = 0.75;
+  } else if (meshColorSelect.value == "teal ") {
+    ctx.globalAlpha = 0.65;
   }
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
