@@ -20,13 +20,8 @@ for (let index = 0; index <= 19; index++) {
 }
 
 // set random initial mesh and mask to display
-let min = Math.floor(0);
-let max = Math.floor(49);
-let randMesh = Math.floor(Math.random() * (max - min) + min);
-
-min = Math.floor(0);
-max = Math.floor(19);
-let randMask = Math.floor(Math.random() * (max - min) + min);
+let randMesh = getRand(0, meshArray.length);
+let randMask = getRand(0, maskArray.length);
 maskImg.src = maskArray[randMask];
 
 // Dynamic element creation
@@ -82,37 +77,37 @@ vertSliderLabel.setAttribute("for", "vertSlider");
 vertSliderLabel.innerHTML = "Image Position";
 vertSlider.insertAdjacentElement("beforebegin", vertSliderLabel);
 
-const meshTempSelect = document.createElement("select");
-uiContainer.append(meshTempSelect);
-meshTempSelect.classList.add("uiElement");
-meshTempSelect.setAttribute("id", "meshTempSelect");
+const meshColorSelect = document.createElement("select");
+uiContainer.append(meshColorSelect);
+meshColorSelect.classList.add("uiElement");
+meshColorSelect.setAttribute("id", "meshColorSelect");
 var optBlue = document.createElement("option");
 optBlue.value = "blue ";
 optBlue.innerHTML = "Blue";
-meshTempSelect.appendChild(optBlue);
+meshColorSelect.appendChild(optBlue);
 var optRed = document.createElement("option");
 optRed.value = "red ";
 optRed.innerHTML = "Red";
-meshTempSelect.appendChild(optRed);
+meshColorSelect.appendChild(optRed);
 var optPink = document.createElement("option");
 optPink.value = "pink ";
 optPink.innerHTML = "Pink";
-meshTempSelect.appendChild(optPink);
+meshColorSelect.appendChild(optPink);
 
-let randMeshTemp = Math.round(Math.random());
-if (randMeshTemp <= 0.33) {
-  meshTempSelect.value = "blue ";
-} else if (randMeshTemp > 0.33 && randMeshTemp < 0.66) {
-  meshTempSelect.value = "red ";
-} else if (randMeshTemp >= 0.66) {
-  meshTempSelect.value = "pink ";
+let randMeshColor = Math.random();
+if (randMeshColor <= 0.33) {
+  meshColorSelect.value = "blue ";
+} else if (randMeshColor > 0.33 && randMeshColor < 0.66) {
+  meshColorSelect.value = "red ";
+} else if (randMeshColor >= 0.66) {
+  meshColorSelect.value = "pink ";
 }
 
-const meshTempSelectLabel = document.createElement("label");
-meshTempSelectLabel.classList.add("uiElementLabel");
-meshTempSelectLabel.setAttribute("for", "meshSelect");
-meshTempSelectLabel.innerHTML = "Mesh Temperature";
-meshTempSelect.insertAdjacentElement("beforebegin", meshTempSelectLabel);
+const meshColorSelectLabel = document.createElement("label");
+meshColorSelectLabel.classList.add("uiElementLabel");
+meshColorSelectLabel.setAttribute("for", "meshSelect");
+meshColorSelectLabel.innerHTML = "Mesh Color";
+meshColorSelect.insertAdjacentElement("beforebegin", meshColorSelectLabel);
 
 const meshSelect = document.createElement("select");
 uiContainer.append(meshSelect);
@@ -226,7 +221,7 @@ function drawImg(img, canvas) {
   );
 
   // Draw mesh (previously masked)
-  if (meshTempSelect.value == "red ") {
+  if (meshColorSelect.value == "red ") {
     ctx.globalAlpha = 0.65;
   } else {
     ctx.globalAlpha = 0.9;
@@ -235,7 +230,7 @@ function drawImg(img, canvas) {
   ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
   ctx.globalCompositeOperation = "multiply";
   ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
-  if (meshTempSelect.value == "pink ") {
+  if (meshColorSelect.value == "pink ") {
     ctx.globalCompositeOperation = "multiply";
     ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
   }
@@ -288,23 +283,19 @@ vertSlider.addEventListener("input", function () {
 randomButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
 
-  let randMeshTemp = Math.round(Math.random());
-  if (randMeshTemp <= 0.33) {
-    meshTempSelect.value = "blue ";
-  } else if (randMeshTemp > 0.33 && randMeshTemp < 0.66) {
-    meshTempSelect.value = "red ";
-  } else if (randMeshTemp >= 0.66) {
-    meshTempSelect.value = "pink ";
+  let randMeshColor = Math.random();
+  if (randMeshColor <= 0.33) {
+    meshColorSelect.value = "blue ";
+  } else if (randMeshColor > 0.33 && randMeshColor < 0.66) {
+    meshColorSelect.value = "red ";
+  } else if (randMeshColor >= 0.66) {
+    meshColorSelect.value = "pink ";
   }
 
-  let min = Math.floor(0);
-  let max = Math.floor(49);
-  let randMesh = Math.floor(Math.random() * (max - min) + min);
-  meshImg.src = meshTempSelect.value + meshArray[randMesh];
+  let randMesh = getRand(0, meshArray.length);
+  meshImg.src = meshColorSelect.value + meshArray[randMesh];
   meshSelect.value = meshArray[randMesh];
-  min = Math.floor(0);
-  max = Math.floor(15);
-  let randMask = Math.floor(Math.random() * (max - min) + min);
+  let randMask = getRand(0, maskArray.length);
   maskImg.src = maskArray[randMask];
   maskSelect.value = maskArray[randMask];
   console.log("Random mask and mesh selected");
@@ -332,10 +323,10 @@ saveButton.addEventListener("click", function () {
 });
 
 function combineTempandMeshpath() {
-  meshImg.src = meshTempSelect.value + meshSelect.value;
+  meshImg.src = meshColorSelect.value + meshSelect.value;
 }
 
-meshTempSelect.addEventListener("change", function () {
+meshColorSelect.addEventListener("change", function () {
   combineTempandMeshpath();
   drawCanvas();
 });
@@ -367,17 +358,24 @@ document.onkeydown = function (e) {
       maskImg.src = maskSelect.value;
       break;
     case 49:
-      meshTempSelect.value = "blue ";
+      meshColorSelect.value = "blue ";
       combineTempandMeshpath();
       break;
     case 50:
-      meshTempSelect.value = "red ";
+      meshColorSelect.value = "red ";
       combineTempandMeshpath();
       break;
     case 51:
-      meshTempSelect.value = "pink ";
+      meshColorSelect.value = "pink ";
       combineTempandMeshpath();
       break;
   }
   drawCanvas();
 };
+
+function getRand(minimum, maximum) {
+  let min = Math.floor(minimum);
+  let max = Math.floor(maximum);
+  let random = Math.floor(Math.random() * (max - min) + min);
+  return random;
+}
