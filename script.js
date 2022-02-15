@@ -420,7 +420,6 @@ function makeThumbnails(i) {
     thumbnails[i].setAttribute("id", "maskThumbnail" + i);
     maskUI.append(thumbnails[i]);
   }
-  console.log(thumbnails);
   return thumbnails;
 }
 

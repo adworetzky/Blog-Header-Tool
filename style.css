@@ -80,12 +80,14 @@ body {
     max-height: 35%;
     margin: 5px;
     background-color: #344955;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.199));
   }
   .thumbnails-selected {
     max-height: 35%;
-    border: 1px solid #a7e9f1;
+
     margin: 5px;
-    background-color: #344955;
+    background-color: #a7e9f1;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.199));
   }
   .uiContainer {
     display: flex;
