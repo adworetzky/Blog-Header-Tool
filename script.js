@@ -165,7 +165,7 @@ directions.setAttribute("id", "directions");
 
 // focus on mesh selector on load
 window.onload = function () {
-  document.getElementById("meshSelect").focus();
+  document.getElementById("randomButton").focus();
 };
 
 // Initial Drawn Canvas
