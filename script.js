@@ -1,12 +1,12 @@
 // Canvas size variables
-var exportWidth = 1200;
-var exportHeight = 672;
+let exportWidth = 1200;
+let exportHeight = 672;
 let counter = 1;
 
-var stockImg = new Image();
+let stockImg = new Image();
 stockImg.src = "stock img/placeholderimg.png";
-var maskImg = new Image();
-var meshImg = new Image();
+let maskImg = new Image();
+let meshImg = new Image();
 
 // fill an array with src links to mesh and mask files
 let meshArray = [];
@@ -51,17 +51,13 @@ uiContainer.append(fileInput);
 fileInput.classList.add("uiElement");
 fileInput.type = "file";
 fileInput.setAttribute("id", "fileUpload");
-
 const fileInputLabel = document.createElement("label");
 fileInputLabel.classList.add("uiElementLabel");
 fileInputLabel.setAttribute("for", "fileUpload");
 fileInputLabel.innerHTML = "Stock Image";
 fileInput.insertAdjacentElement("beforebegin", fileInputLabel);
 
-// // The dropzone method is added to jQuery elements and can
-// // be invoked with an (optional) configuration object.
-// $("main").dropzone({ url: "/file/post" });
-
+//Sliders
 const vertSlider = document.createElement("input");
 uiContainer.append(vertSlider);
 vertSlider.classList.add("uiElement");
@@ -70,30 +66,34 @@ vertSlider.min = -50;
 vertSlider.max = 50;
 vertSlider.value = 0;
 vertSlider.setAttribute("id", "vertSlider");
-
 const vertSliderLabel = document.createElement("label");
 vertSliderLabel.classList.add("uiElementLabel");
 vertSliderLabel.setAttribute("for", "vertSlider");
-vertSliderLabel.innerHTML = "Image Position";
+vertSliderLabel.innerHTML = "Image Position: ";
 vertSlider.insertAdjacentElement("beforebegin", vertSliderLabel);
 
+// Selects
 const meshColorSelect = document.createElement("select");
 uiContainer.append(meshColorSelect);
 meshColorSelect.classList.add("uiElement");
 meshColorSelect.setAttribute("id", "meshColorSelect");
-var optBlue = document.createElement("option");
+let optBlue = document.createElement("option");
 optBlue.value = "blue ";
 optBlue.innerHTML = "Blue";
 meshColorSelect.appendChild(optBlue);
-var optRed = document.createElement("option");
+let optRed = document.createElement("option");
 optRed.value = "red ";
 optRed.innerHTML = "Red";
 meshColorSelect.appendChild(optRed);
-var optPink = document.createElement("option");
+let optPink = document.createElement("option");
 optPink.value = "pink ";
 optPink.innerHTML = "Pink";
 meshColorSelect.appendChild(optPink);
-
+const meshColorSelectLabel = document.createElement("label");
+meshColorSelectLabel.classList.add("uiElementLabel");
+meshColorSelectLabel.setAttribute("for", "meshSelect");
+meshColorSelectLabel.innerHTML = "Mesh Color";
+meshColorSelect.insertAdjacentElement("beforebegin", meshColorSelectLabel);
 let randMeshColor = Math.random();
 if (randMeshColor <= 0.33) {
   meshColorSelect.value = "blue ";
@@ -102,12 +102,6 @@ if (randMeshColor <= 0.33) {
 } else if (randMeshColor >= 0.66) {
   meshColorSelect.value = "pink ";
 }
-
-const meshColorSelectLabel = document.createElement("label");
-meshColorSelectLabel.classList.add("uiElementLabel");
-meshColorSelectLabel.setAttribute("for", "meshSelect");
-meshColorSelectLabel.innerHTML = "Mesh Color";
-meshColorSelect.insertAdjacentElement("beforebegin", meshColorSelectLabel);
 
 const meshSelect = document.createElement("select");
 uiContainer.append(meshSelect);
@@ -119,8 +113,8 @@ meshSelectLabel.classList.add("uiElementLabel");
 meshSelectLabel.setAttribute("for", "meshSelect");
 meshSelectLabel.innerHTML = "Mesh Selection";
 meshSelect.insertAdjacentElement("beforebegin", meshSelectLabel);
-for (var i = 0; i < meshArray.length; i++) {
-  var opt = document.createElement("option");
+for (let i = 0; i < meshArray.length; i++) {
+  let opt = document.createElement("option");
   opt.value = meshArray[i];
   opt.innerHTML = "Mesh:" + (i + 1);
   meshSelect.appendChild(opt);
@@ -130,42 +124,28 @@ const maskSelect = document.createElement("select");
 uiContainer.append(maskSelect);
 maskSelect.classList.add("uiElement");
 maskSelect.setAttribute("id", "maskSelect");
-
 const maskSelectLabel = document.createElement("label");
 maskSelectLabel.classList.add("uiElementLabel");
 maskSelectLabel.setAttribute("for", "maskSelect");
 maskSelectLabel.innerHTML = "Mask Selection";
 maskSelect.insertAdjacentElement("beforebegin", maskSelectLabel);
-for (var i = 0; i < maskArray.length; i++) {
-  var opt = document.createElement("option");
+for (let i = 0; i < maskArray.length; i++) {
+  let opt = document.createElement("option");
   opt.value = maskArray[i];
   opt.innerHTML = "Mask:" + (i + 1);
   maskSelect.appendChild(opt);
 }
 maskSelect.value = maskArray[randMask];
 
-const reloadButton = document.createElement("button");
-uiContainer.append(reloadButton);
-reloadButton.innerHTML = "Reload";
-reloadButton.classList.add("uiElement");
-reloadButton.setAttribute("id", "reloadButton");
-
-const randomButton = document.createElement("button");
-uiContainer.append(randomButton);
-randomButton.innerHTML = "Randomize";
-randomButton.classList.add("uiElement");
-randomButton.setAttribute("id", "randomButton");
-
-const saveButton = document.createElement("button");
-uiContainer.append(saveButton);
-saveButton.innerHTML = "Save";
-saveButton.classList.add("uiElement");
-saveButton.setAttribute("id", "saveButton");
+//Buttons
+const reloadButton = createButton("Reload", "reloadButton");
+const randomButton = createButton("Randomize", "randomButton");
+const saveButton = createButton("Save", "saveButton");
 
 const directions = document.createElement("p");
 uiContainer.append(directions);
 directions.innerHTML =
-  "Hotkeys:<br>Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection<br> 1 = Blue, 2 = Red, 3= Pink";
+  "Hotkeys:<br>Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection<br> 1 = Blue, 2 = Red, 3= Pink<br>S key = Save";
 directions.classList.add("uiElement");
 directions.setAttribute("id", "directions");
 
@@ -197,10 +177,10 @@ function drawImg(img, canvas) {
   let ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // get the scale
-  var scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+  let scale = Math.max(canvas.width / img.width, canvas.height / img.height);
   // get the top left position of the image
-  var x = canvas.width / 2 - (img.width / 2) * scale;
-  var y = canvas.height / 2 - (img.height / 2) * scale;
+  let x = canvas.width / 2 - (img.width / 2) * scale;
+  let y = canvas.height / 2 - (img.height / 2) * scale;
 
   let offset = (img.height * scale - canvas.height) / 2;
   vertSlider.min = -offset;
@@ -219,12 +199,21 @@ function drawImg(img, canvas) {
     (img.width + 1) * scale,
     (img.height + 1) * scale
   );
+  if (offset == 0) {
+    vertSlider.style.display = "none";
+    vertSliderLabel.style.display = "none";
+  } else {
+    vertSlider.style.display = "block";
+    vertSliderLabel.style.display = "block";
+  }
 
   // Draw mesh (previously masked)
   if (meshColorSelect.value == "red ") {
-    ctx.globalAlpha = 0.65;
-  } else {
-    ctx.globalAlpha = 0.9;
+    ctx.globalAlpha = 0.75;
+  } else if (meshColorSelect.value == "pink ") {
+    ctx.globalAlpha = 1;
+  } else if (meshColorSelect.value == "blue ") {
+    ctx.globalAlpha = 0.75;
   }
   ctx.globalCompositeOperation = "color";
   ctx.drawImage(c1, -5, -5, canvas.width + 10, canvas.height + 10);
@@ -331,7 +320,7 @@ meshColorSelect.addEventListener("change", function () {
   drawCanvas();
 });
 
-document.onkeydown = function (e) {
+document.onkeyup = function (e) {
   switch (e.keyCode) {
     case 37:
       if (meshSelect.selectedIndex > 0) {
@@ -361,13 +350,29 @@ document.onkeydown = function (e) {
       meshColorSelect.value = "blue ";
       combineTempandMeshpath();
       break;
+    case 97:
+      meshColorSelect.value = "blue ";
+      combineTempandMeshpath();
+      break;
     case 50:
+      meshColorSelect.value = "red ";
+      combineTempandMeshpath();
+      break;
+    case 98:
       meshColorSelect.value = "red ";
       combineTempandMeshpath();
       break;
     case 51:
       meshColorSelect.value = "pink ";
       combineTempandMeshpath();
+      break;
+    case 99:
+      meshColorSelect.value = "pink ";
+      combineTempandMeshpath();
+      break;
+    case 83:
+      const sKeyEvent = new Event("click");
+      saveButton.dispatchEvent(sKeyEvent);
       break;
   }
   drawCanvas();
@@ -378,4 +383,13 @@ function getRand(minimum, maximum) {
   let max = Math.floor(maximum);
   let random = Math.floor(Math.random() * (max - min) + min);
   return random;
+}
+
+function createButton(buttonText, id) {
+  const x = document.createElement("button");
+  uiContainer.append(x);
+  x.innerHTML = buttonText;
+  x.classList.add("uiElement");
+  x.setAttribute("id", id);
+  return x;
 }

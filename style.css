@@ -33,7 +33,7 @@ body {
   width: 99%;
   align-content: center;
   background-color: #232f34;
-  color: #f9aa33;
+  color: #a7e9f1;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
@@ -82,12 +82,29 @@ body {
   }
   .uiElementLabel {
     margin-top: 20px;
-    color: #f9aa33;
+    color: #a7e9f1;
+  }
+
+  button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #a7e9f1;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.199));
+  }
+
+  button:hover {
+    background-color: #31324c;
+    color: aliceblue;
   }
   #randomButton,
   #reloadButton {
     margin-top: 20px;
     align-self: flex-start;
+  }
+
+  #randomButton {
+    padding: 10px;
   }
 
   #saveButton {
