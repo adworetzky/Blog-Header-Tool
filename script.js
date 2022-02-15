@@ -159,7 +159,7 @@ const saveButton = createButton("Save", "saveButton");
 const directions = document.createElement("p");
 uiContainer.append(directions);
 directions.innerHTML =
-  "Hotkeys:<br>Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection<br> 1 = Blue, 2 = Red, 3= Pink<br>S key = Save";
+  "Hotkeys:<br>Left and Right arrows = Mesh Selection<br>Up and Down arrows = Mask Selection<br> 1 = Blue, 2 = Red, 3= Pink, 4= Teal<br>S key = Save";
 directions.classList.add("uiElement");
 directions.setAttribute("id", "directions");
 
@@ -391,6 +391,14 @@ document.onkeyup = function (e) {
       break;
     case 99:
       meshColorSelect.value = "pink ";
+      combineTempandMeshpath();
+      break;
+    case 52:
+      meshColorSelect.value = "teal ";
+      combineTempandMeshpath();
+      break;
+    case 100:
+      meshColorSelect.value = "teal ";
       combineTempandMeshpath();
       break;
     case 83:
