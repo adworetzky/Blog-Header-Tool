@@ -28,6 +28,7 @@ html {
 }
 body {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   height: 99%;
   width: 99%;
@@ -67,6 +68,25 @@ body {
     filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.199));
     background-color: rgb(189, 189, 189);
   }
+  #maskUI {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1% 0 0 0;
+    width: 95%;
+    height: 10%;
+  }
+  .thumbnails {
+    max-height: 35%;
+    margin: 5px;
+    background-color: #344955;
+  }
+  .thumbnails-selected {
+    max-height: 35%;
+    border: 1px solid #a7e9f1;
+    margin: 5px;
+    background-color: #344955;
+  }
   .uiContainer {
     display: flex;
     flex-direction: column;
@@ -90,7 +110,7 @@ body {
     padding: 10px;
     border-radius: 10px;
     border: none;
-    width: 25%;
+
     background-color: #a7e9f1;
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.199));
   }

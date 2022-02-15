@@ -34,12 +34,17 @@ const uiContainer = document.createElement("div");
 uiContainer.classList.add("uiContainer");
 main.append(uiContainer);
 
-// Elements
 const c = document.createElement("canvas");
 main.append(c);
 c.setAttribute("id", "canvas");
 c.height = exportHeight;
 c.width = exportWidth;
+
+const maskUI = document.createElement("div");
+document.querySelector("body").append(maskUI);
+maskUI.setAttribute("id", "maskUI");
+
+// Elements
 
 const c1 = document.createElement("canvas");
 c1.setAttribute("id", "canvas1");
@@ -137,6 +142,9 @@ for (let i = 0; i < maskArray.length; i++) {
 }
 maskSelect.value = maskArray[randMask];
 
+const maskThumbnail = makeThumbnails();
+makeThumbnailEventListeners();
+
 //Buttons
 const reloadButton = createButton("Reload", "reloadButton");
 const randomButton = createButton("Randomize", "randomButton");
@@ -228,6 +236,13 @@ function drawImg(img, canvas) {
 
 // Combined Draw function, Use to keep order of layer intact
 function drawCanvas() {
+  for (var i = 0; i < maskThumbnail.length; ++i) {
+    if (maskThumbnail[i].src == maskImg.src) {
+      maskThumbnail[i].classList.replace("thumbnails", "thumbnails-selected");
+    } else {
+      maskThumbnail[i].classList.replace("thumbnails-selected", "thumbnails");
+    }
+  }
   let ctx0 = c.getContext("2d");
   ctx0.clearRect(0, 0, c.width, c.height);
   let ctx1 = c1.getContext("2d");
@@ -392,4 +407,29 @@ function createButton(buttonText, id) {
   x.classList.add("uiElement");
   x.setAttribute("id", id);
   return x;
+}
+
+function makeThumbnails(i) {
+  var thumbnails = [];
+
+  for (var i = 0; i < maskArray.length; ++i) {
+    thumbnails[i] = document.createElement("img");
+    thumbnails[i].src = "mask/Mask" + i + ".png";
+
+    thumbnails[i].classList.add("thumbnails");
+    thumbnails[i].setAttribute("id", "maskThumbnail" + i);
+    maskUI.append(thumbnails[i]);
+  }
+  console.log(thumbnails);
+  return thumbnails;
+}
+
+function makeThumbnailEventListeners() {
+  for (let index = 0; index < maskThumbnail.length; index++) {
+    maskThumbnail[index].addEventListener("click", function () {
+      maskImg.src = maskThumbnail[index].src;
+      maskSelect.selectedIndex = index;
+      drawCanvas();
+    });
+  }
 }
