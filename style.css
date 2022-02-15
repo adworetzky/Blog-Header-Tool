@@ -72,7 +72,7 @@ body {
     justify-content: center;
     background-color: #344955;
     width: 25%;
-    margin: 0 1%, 0, 0;
+    margin: 0px 1% 0px 0px;
     padding: 2%;
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.199));
   }
@@ -89,6 +89,7 @@ body {
     padding: 10px;
     border-radius: 10px;
     border: none;
+    width: 25%;
     background-color: #a7e9f1;
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.199));
   }
@@ -99,16 +100,14 @@ body {
   }
   #randomButton,
   #reloadButton {
-    margin-top: 20px;
     align-self: flex-start;
+    margin: 20px 0 0 0;
   }
 
   #randomButton {
-    padding: 10px;
   }
 
   #saveButton {
-    margin-top: 20px;
-    align-self: flex-end;
+    margin: 20px 0 20px 0;
   }
 }

@@ -54,7 +54,7 @@ fileInput.setAttribute("id", "fileUpload");
 const fileInputLabel = document.createElement("label");
 fileInputLabel.classList.add("uiElementLabel");
 fileInputLabel.setAttribute("for", "fileUpload");
-fileInputLabel.innerHTML = "Stock Image";
+fileInputLabel.innerHTML = "Stock Image:";
 fileInput.insertAdjacentElement("beforebegin", fileInputLabel);
 
 //Sliders
@@ -92,7 +92,7 @@ meshColorSelect.appendChild(optPink);
 const meshColorSelectLabel = document.createElement("label");
 meshColorSelectLabel.classList.add("uiElementLabel");
 meshColorSelectLabel.setAttribute("for", "meshSelect");
-meshColorSelectLabel.innerHTML = "Mesh Color";
+meshColorSelectLabel.innerHTML = "Mesh Color:";
 meshColorSelect.insertAdjacentElement("beforebegin", meshColorSelectLabel);
 let randMeshColor = Math.random();
 if (randMeshColor <= 0.33) {
@@ -111,7 +111,7 @@ meshSelect.value = meshArray[randMesh];
 const meshSelectLabel = document.createElement("label");
 meshSelectLabel.classList.add("uiElementLabel");
 meshSelectLabel.setAttribute("for", "meshSelect");
-meshSelectLabel.innerHTML = "Mesh Selection";
+meshSelectLabel.innerHTML = "Mesh Selection:";
 meshSelect.insertAdjacentElement("beforebegin", meshSelectLabel);
 for (let i = 0; i < meshArray.length; i++) {
   let opt = document.createElement("option");
@@ -127,7 +127,7 @@ maskSelect.setAttribute("id", "maskSelect");
 const maskSelectLabel = document.createElement("label");
 maskSelectLabel.classList.add("uiElementLabel");
 maskSelectLabel.setAttribute("for", "maskSelect");
-maskSelectLabel.innerHTML = "Mask Selection";
+maskSelectLabel.innerHTML = "Mask Selection:";
 maskSelect.insertAdjacentElement("beforebegin", maskSelectLabel);
 for (let i = 0; i < maskArray.length; i++) {
   let opt = document.createElement("option");
