@@ -94,18 +94,24 @@ let optPink = document.createElement("option");
 optPink.value = "pink ";
 optPink.innerHTML = "Pink";
 meshColorSelect.appendChild(optPink);
+let optTeal = document.createElement("option");
+optTeal.value = "teal ";
+optTeal.innerHTML = "Teal";
+meshColorSelect.appendChild(optTeal);
 const meshColorSelectLabel = document.createElement("label");
 meshColorSelectLabel.classList.add("uiElementLabel");
 meshColorSelectLabel.setAttribute("for", "meshSelect");
 meshColorSelectLabel.innerHTML = "Mesh Color:";
 meshColorSelect.insertAdjacentElement("beforebegin", meshColorSelectLabel);
 let randMeshColor = Math.random();
-if (randMeshColor <= 0.33) {
+if (randMeshColor <= 0.5) {
   meshColorSelect.value = "blue ";
-} else if (randMeshColor > 0.33 && randMeshColor < 0.66) {
+} else if (randMeshColor > 0.5 && randMeshColor <= 0.66) {
   meshColorSelect.value = "red ";
-} else if (randMeshColor >= 0.66) {
+} else if (randMeshColor > 0.66 && randMeshColor <= 0.82) {
   meshColorSelect.value = "pink ";
+} else if (randMeshColor > 0.82) {
+  meshColorSelect.value = "teal ";
 }
 
 const meshSelect = document.createElement("select");
@@ -290,10 +296,12 @@ randomButton.addEventListener("click", function () {
   let randMeshColor = Math.random();
   if (randMeshColor <= 0.5) {
     meshColorSelect.value = "blue ";
-  } else if (randMeshColor > 0.5 && randMeshColor < 0.75) {
+  } else if (randMeshColor > 0.5 && randMeshColor <= 0.66) {
     meshColorSelect.value = "red ";
-  } else if (randMeshColor >= 0.75) {
+  } else if (randMeshColor > 0.66 && randMeshColor <= 0.82) {
     meshColorSelect.value = "pink ";
+  } else if (randMeshColor > 0.82) {
+    meshColorSelect.value = "teal ";
   }
 
   let randMesh = getRand(0, meshArray.length);
