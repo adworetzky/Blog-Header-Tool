@@ -273,11 +273,11 @@ randomButton.addEventListener("click", function () {
   // set random initial mesh and mask to display
 
   let randMeshColor = Math.random();
-  if (randMeshColor <= 0.33) {
+  if (randMeshColor <= 0.5) {
     meshColorSelect.value = "blue ";
-  } else if (randMeshColor > 0.33 && randMeshColor < 0.66) {
+  } else if (randMeshColor > 0.5 && randMeshColor < 0.75) {
     meshColorSelect.value = "red ";
-  } else if (randMeshColor >= 0.66) {
+  } else if (randMeshColor >= 0.75) {
     meshColorSelect.value = "pink ";
   }
 
